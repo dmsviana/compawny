@@ -1,0 +1,6 @@
+# application.yml (arquivo principal)
+spring:
+  application:
+    name: compawny
+  profiles:
+    active: test
