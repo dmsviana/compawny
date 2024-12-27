@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.1'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'jacoco'
 }
 
 group = 'dev.dmsviana'
@@ -39,9 +40,31 @@ dependencies {
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.jacoco:org.jacoco.agent:0.8.12'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
+
+jacocoTestReport {
+	reports {
+		xml {
+			required = true
+			destination file("${buildDir}/reports/jacoco/report.xml")
+		}
+		html {
+			required = true
+			destination file("${buildDir}/reports/jacoco/html")
+		}
+
+		classDirectories.from = fileTree(
+				dir: 'build/classes/java/main',
+				excludes: ['**/entity/**', '**/dto/**', '**/*Application.*']
+		)
+		sourceDirectories.from = files('src/main/java')
+		executionData.from = files('build/jacoco/test.exec')
+	}
+}
+
 
 tasks.named('test') {
 	useJUnitPlatform()
