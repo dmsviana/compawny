@@ -64,9 +64,6 @@ public class Pet implements Serializable {
     @Column(nullable = false)
     private Boolean deleted = false;
 
-    @Version
-    private Long version;
-
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;

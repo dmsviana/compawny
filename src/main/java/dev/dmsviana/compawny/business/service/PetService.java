@@ -1,9 +1,12 @@
 package dev.dmsviana.compawny.business.service;
 
+import dev.dmsviana.compawny.model.entity.Caregiver;
 import dev.dmsviana.compawny.model.entity.Pet;
 import dev.dmsviana.compawny.model.repository.PetRepository;
 import dev.dmsviana.compawny.model.repository.exception.EntityAlreadyExistsException;
 import dev.dmsviana.compawny.model.repository.exception.EntityNotFoundException;
+import dev.dmsviana.compawny.presentation.dto.caregiver.CaregiverResponseDto;
+import dev.dmsviana.compawny.presentation.dto.caregiver.mapper.CaregiverMapper;
 import dev.dmsviana.compawny.presentation.dto.pet.CreatePetRequestDto;
 import dev.dmsviana.compawny.presentation.dto.pet.PetResponseDto;
 import dev.dmsviana.compawny.presentation.dto.pet.UpdatePetRequestDto;
@@ -31,6 +34,12 @@ public class PetService {
         validateCaregiverId(requestDto.getCaregiverId());
 
         Pet pet = petMapper.toEntity(requestDto);
+
+        if (requestDto.getCaregiverId() != null) {
+            var caregiver = caregiverService.getCaregiverById(requestDto.getCaregiverId());
+            pet.setCaregiver(caregiver);
+        }
+
         Pet savedPet = petRepository.save(pet);
 
         log.info("Pet created successfully with ID: {}", savedPet.getId());

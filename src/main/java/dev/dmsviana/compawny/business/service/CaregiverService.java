@@ -67,7 +67,7 @@ public class CaregiverService {
         log.info("Caregiver deleted successfully");
     }
 
-    private Caregiver getCaregiverById(Long id) {
+    public Caregiver getCaregiverById(Long id) {
         return caregiverRepository.findByIdAndNotDeleted(id)
                 .orElseThrow(() -> {
                     log.error("Caregiver not found with ID: {}", id);
