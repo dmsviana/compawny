@@ -20,7 +20,6 @@ public class OpenAPIConfig {
 
     private final Environment environment;
 
-
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()

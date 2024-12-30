@@ -16,14 +16,15 @@ import java.util.List;
 public interface PetMapper {
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "version", ignore = true)
     @Mapping(target = "deleted", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "caregiver", source = "caregiverId")
     Pet toEntity(CreatePetRequestDto dto);
 
+    @Mapping(target = "caregiver", source = "caregiver")
     PetResponseDto toDto(Pet entity);
+
     List<PetResponseDto> toDtoList(List<Pet> entities);
 
     void updateEntityFromDto(UpdatePetRequestDto dto, @MappingTarget Pet entity);
